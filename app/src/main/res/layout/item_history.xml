@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardViewHistory"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/_8mdp"
+    app:cardCornerRadius="@dimen/_15mdp"
+    style="@style/cardViewHistory"
+    app:cardElevation="@dimen/_5mdp"
+    android:layout_height="@dimen/_150mdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtHistoryCalc"
+                style="@style/CalculationStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10mdp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="2+10+15" />
+
+
+            <TextView
+                android:id="@+id/txtHistoryResult"
+                style="@style/ResultStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="textEnd"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/txtHistoryCalc"
+                app:layout_constraintTop_toBottomOf="@+id/txtHistoryCalc"
+                tools:text="27" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
