@@ -21,7 +21,8 @@ show history of calculation
 
 | dark theme |
 |:---:|  
-| ![dark theme](https://github.com/user-attachments/assets/70379958-3bb5-401c-904d-231c8de71b75) |![8](https://github.com/user-attachments/assets/b8d774b1-8d35-4a34-b0b3-95f8d4028668)|
+| !![8](https://github.com/user-attachments/assets/b8d774b1-8d35-4a34-b0b3-95f8d4028668) |![6](https://github.com/user-attachments/assets/8bb9574d-3bc7-4e5b-a92f-43bba2bdd839)
+
 | ---|---|
 | ![7](https://github.com/user-attachments/assets/7871d057-5077-44ca-909d-bcfe6c8626e6) |
 |---|
