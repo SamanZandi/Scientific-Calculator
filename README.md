@@ -11,10 +11,12 @@ show history of calculation
 
 # Screenshots
 
-| light theme | dark theme |
-| ---------      | ------------       |
+| light theme |
+| --- |   
 
-| ![light theme](https://github.com/user-attachments/assets/cc1f556d-b866-4c3a-ad91-1f6cd3aa8fa8) | ![dark theme](https://github.com/user-attachments/assets/cc4295e6-447e-4a24-a9c6-59ca6d6c3eca) |
+| ![light theme](https://github.com/user-attachments/assets/cc1f556d-b866-4c3a-ad91-1f6cd3aa8fa8) | ![2](https://github.com/user-attachments/assets/8dfcaa60-11be-4b8f-9569-cc0947357a75)
+
+ |
 | ---      | ---       |
 
 
