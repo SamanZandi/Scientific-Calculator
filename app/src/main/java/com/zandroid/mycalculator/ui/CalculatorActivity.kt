@@ -106,11 +106,13 @@ class CalculatorActivity : AppCompatActivity() {
             }
 
             //Percent
-            if (txtExpression.contains("%")) {
+            if (txtExpression.contains("%") && (txtExpression.contains("+") || txtExpression.contains("-")) ) {
                 val preprocessedExpression = preprocessPercentageExpression(txtExpression)
                 val expression = Expression(preprocessedExpression)
                 val result = expression.calculate()
                 txtExpression = result.toString()
+            }else{
+                txtExpression=txtExpression.replace("%","/100")
             }
 
 
@@ -579,7 +581,7 @@ class CalculatorActivity : AppCompatActivity() {
             val operator = matchResult.groups[3]?.value // Operator (+, -, *, /)
             val percentage = matchResult.groups[4]?.value // Percentage number
             // Replace with (num1 <operator> (num1 * percentage / 100))
-            "$num1 $operator ($num1 * $percentage / 100)"
+            "$num1 $operator ($num1 * $percentage)/100"
         }
     }
 
