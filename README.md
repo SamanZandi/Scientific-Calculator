@@ -21,11 +21,12 @@ show history of calculation
 
 
 | dark theme |
-|---|  
+|---| 
 
- ![8](https://github.com/user-attachments/assets/b8d774b1-8d35-4a34-b0b3-95f8d4028668) |![6](https://github.com/user-attachments/assets/8bb9574d-3bc7-4e5b-a92f-43bba2bdd839)
+ ![8](https://github.com/user-attachments/assets/b8d774b1-8d35-4a34-b0b3-95f8d4028668) |![6](https://github.com/user-attachments/assets/8bb9574d-3bc7-4e5b-a92f-43bba2bdd839)|
 | ---|---|
-| ![7](https://github.com/user-attachments/assets/7871d057-5077-44ca-909d-bcfe6c8626e6) 
+| ![7](https://github.com/user-attachments/assets/7871d057-5077-44ca-909d-bcfe6c8626e6) | ![9](https://github.com/user-attachments/assets/069eda36-e2a8-40c4-9a5c-e6951f10a518)|
+
 
 
 
