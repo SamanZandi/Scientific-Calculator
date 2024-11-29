@@ -10,7 +10,7 @@ support light and dark theme
 show history of calculation 
 
 # Screenshots
-
+| ---  | ---  |
 | light theme |
 | :---: |   
 
