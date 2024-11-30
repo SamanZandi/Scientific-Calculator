@@ -106,13 +106,13 @@ class CalculatorActivity : AppCompatActivity() {
             }
 
             //Percent
-            if (txtExpression.contains("%") && (txtExpression.contains("+") || txtExpression.contains("-")) ) {
-                val preprocessedExpression = preprocessPercentageExpression(txtExpression)
-                val expression = Expression(preprocessedExpression)
-                val result = expression.calculate()
-                txtExpression = result.toString()
-            }else{
-                txtExpression=txtExpression.replace("%","/100")
+            if (txtExpression.contains("%")) {
+                if(txtExpression.contains("+") || txtExpression.contains("-") || txtExpression.contains("*") || txtExpression.contains("/")){
+                    val preprocessedExpression = preprocessPercentageExpression(txtExpression)
+                    val expression = Expression(preprocessedExpression)
+                    val result = expression.calculate()
+                    txtExpression = result.toString()
+                }
             }
 
 
@@ -357,13 +357,23 @@ class CalculatorActivity : AppCompatActivity() {
 
         binding.apply {
             //%
-            btnPercent.setOnClickListener { appendCharWithCondition("0%","%") }
+            btnPercent.setOnClickListener {
+                if (txtResult.text.toString() == "0") {
+                    appendText("0%")
+                }
+                if (txtCalculation.text.last() != '+' && txtCalculation.text.last() != '-' &&
+                    txtCalculation.text.last() != '×' &&  txtCalculation.text.last() != '÷' &&
+                    txtCalculation.text.last() != '%'
+                ) {
+                    appendText("%")
+                }
+            }
 
             btnDivide.setOnClickListener { appendCharWithCondition("0÷","÷") }
 
             btnMultiply.setOnClickListener { appendCharWithCondition("0×","×") }
 
-            btnSubtract?.setOnClickListener { appendCharWithCondition("0-","-") }
+            btnSubtract.setOnClickListener { appendCharWithCondition("0-","-") }
 
             btnPlus.setOnClickListener { appendCharWithCondition("0+","+") }
 
@@ -573,16 +583,31 @@ class CalculatorActivity : AppCompatActivity() {
     }
 
 
-    fun preprocessPercentageExpression(expression: String): String {
-        // Match a pattern like `number + number%`
+   private fun preprocessPercentageExpression(expression: String): String {
         val percentageRegex = Regex("(\\d+(\\.\\d+)?)\\s*([+\\-*/])\\s*(\\d+(\\.\\d+)?)%")
-        return percentageRegex.replace(expression) { matchResult ->
-            val num1 = matchResult.groups[1]?.value    // First number
-            val operator = matchResult.groups[3]?.value // Operator (+, -, *, /)
-            val percentage = matchResult.groups[4]?.value // Percentage number
-            // Replace with (num1 <operator> (num1 * percentage / 100))
-            "$num1 $operator ($num1 * $percentage)/100"
+        var updatedExpression = expression
+
+        while (percentageRegex.containsMatchIn(updatedExpression)) {
+            updatedExpression = percentageRegex.replace(updatedExpression) { matchResult ->
+                val num1 = matchResult.groups[1]?.value?.toDoubleOrNull()
+                val operator = matchResult.groups[3]?.value
+                val percentage = matchResult.groups[4]?.value?.toDoubleOrNull()
+
+                if (num1 != null && operator != null && percentage != null) {
+                    when (operator) {
+                        "+" -> (num1 + (num1 * percentage / 100)).toString()
+                        "-" -> (num1 - (num1 * percentage / 100)).toString()
+                        "*" -> (num1 * (percentage / 100)).toString()
+                        "/" -> if (percentage != 0.0) (num1 / (percentage / 100)).toString() else "NaN"
+                        else -> matchResult.value
+                    }
+                } else {
+                    matchResult.value
+                }
+            }
         }
+
+        return updatedExpression
     }
 
 

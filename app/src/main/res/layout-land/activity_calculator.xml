@@ -354,6 +354,7 @@
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnPNSign"
                             style="@style/SmallDigitButton"
+                            android:textColor="@color/yellow"
                             android:text="@string/pnSign" />
 
 
