@@ -112,6 +112,8 @@ class CalculatorActivity : AppCompatActivity() {
                     val expression = Expression(preprocessedExpression)
                     val result = expression.calculate()
                     txtExpression = result.toString()
+                }else{
+                    txtExpression = txtExpression.replace("%", "/100")
                 }
             }
 
