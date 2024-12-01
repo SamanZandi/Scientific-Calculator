@@ -13,8 +13,8 @@ android {
         applicationId = "com.zandroid.mycalculator"
         minSdk = 23
         targetSdk = 34
-        versionCode = 10
-        versionName = "3.2"
+        versionCode = 11
+        versionName = "4.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
