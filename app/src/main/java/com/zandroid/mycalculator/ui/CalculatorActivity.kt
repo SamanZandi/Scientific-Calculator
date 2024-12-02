@@ -13,14 +13,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.zandroid.mycalculator.R
 import com.zandroid.mycalculator.databinding.ActivityCalculatorBinding
-import com.zandroid.mycalculator.databinding.ActivitySplashScreenBinding
 import com.zandroid.mycalculator.room.CalcEntity
 import com.zandroid.mycalculator.viewModel.HistoryViewModel
 import com.zandroid.mycalculator.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import net.objecthunter.exp4j.ExpressionBuilder
 import net.objecthunter.exp4j.function.Function
 import net.objecthunter.exp4j.operator.Operator
@@ -112,7 +108,7 @@ class CalculatorActivity : AppCompatActivity() {
                     val expression = Expression(preprocessedExpression)
                     val result = expression.calculate()
                     txtExpression = result.toString()
-                }else{
+                }else if (txtExpression.endsWith("%")){
                     txtExpression = txtExpression.replace("%", "/100")
                 }
             }
@@ -531,13 +527,14 @@ class CalculatorActivity : AppCompatActivity() {
                 btnPi?.text = getString(R.string.piSign)
                 btnPi?.setOnClickListener { appendText("π") }
             }
-            if (btnE?.text == getString(R.string.eSign)) {
+           if (btnE?.text == getString(R.string.eSign)) {
                 btnE.text = getString(R.string.ex)
                 btnE.setOnClickListener { appendText("e^") }
             } else {
                 btnE?.text = getString(R.string.eSign)
                 btnE?.setOnClickListener { appendText("e") }
             }
+
         }
 
     }
@@ -595,17 +592,18 @@ class CalculatorActivity : AppCompatActivity() {
                 val operator = matchResult.groups[3]?.value
                 val percentage = matchResult.groups[4]?.value?.toDoubleOrNull()
 
-                if (num1 != null && operator != null && percentage != null) {
-                    when (operator) {
-                        "+" -> (num1 + (num1 * percentage / 100)).toString()
-                        "-" -> (num1 - (num1 * percentage / 100)).toString()
-                        "*" -> (num1 * (percentage / 100)).toString()
-                        "/" -> if (percentage != 0.0) (num1 / (percentage / 100)).toString() else "NaN"
-                        else -> matchResult.value
-                    }
+                (if (num1 != null && percentage != null && operator!=null) {
+                            when (operator) {
+                                "+" -> (num1 + (num1 * percentage / 100)).toString()
+                                "-" -> (num1 - (num1 * percentage / 100)).toString()
+                                "*" -> (num1 * (percentage / 100)).toString()
+                                "/" -> if (percentage != 0.0) (num1 / (percentage / 100)).toString() else "NaN"
+                                else -> matchResult.value
+                            }
+
                 } else {
                     matchResult.value
-                }
+                })
             }
         }
 
