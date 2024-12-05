@@ -1,5 +1,7 @@
 package com.zandroid.mycalculator.room
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -20,5 +22,5 @@ interface CalcDao {
     fun clearHistory()
 
     @Query("SELECT * FROM table_history ORDER BY id DESC")
-    fun getAllHistory():MutableList<CalcEntity>
+    fun getAllHistory():List<CalcEntity>
 }

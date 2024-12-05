@@ -20,11 +20,12 @@ class HistoryAdapter2 @Inject constructor() : RecyclerView.Adapter<HistoryAdapte
         return ViewHolder()
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         //getItem from PagingDataAdapter
         holder.bind(historyList[position])
         //Not duplicate items
-      //  holder.setIsRecyclable(false)
+        holder.setIsRecyclable(false)
     }
 
     override fun getItemCount() = historyList.size
@@ -38,6 +39,7 @@ class HistoryAdapter2 @Inject constructor() : RecyclerView.Adapter<HistoryAdapte
                 //Click
                 root.setOnClickListener {
                     onItemClickListener?.let { it(item) }
+
                 }
             }
         }

@@ -36,34 +36,30 @@ class HistoryActivity : AppCompatActivity() {
     @Inject
     lateinit var historyAdapter: HistoryAdapter2
 
-    @Inject
-    lateinit var dao: CalcDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding=ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         binding.apply {
 
             //get data
-            viewModel.loadHistory()
+
             viewModel.historyList.observe(this@HistoryActivity){
                 historyAdapter.setData(it)
-                Log.e( "list ", it.toString())
+
                 recyclerHistory.apply {
                     layoutManager=LinearLayoutManager(this@HistoryActivity)
                     adapter=historyAdapter
                 }
+
             }
 
             //delete item
             historyAdapter.setOnItemClickListener {
-                val entity=CalcEntity(it.id,it.expression,it.result)
-                lifecycle.coroutineScope.launch {
-                    dao.deleteExpression(entity)
-                    historyAdapter.setData(dao.getAllHistory())
-                }
+                viewModel.deleteExpression(it)
             }
 
 
@@ -76,6 +72,8 @@ class HistoryActivity : AppCompatActivity() {
                     }
             }
         }
+
+
     }
 
     override fun onDestroy() {

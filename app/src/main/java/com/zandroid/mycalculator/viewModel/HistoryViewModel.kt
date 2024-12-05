@@ -16,12 +16,23 @@ class HistoryViewModel @Inject constructor(private val repository: HistoryReposi
     val emptyList:MutableLiveData<List<CalcEntity>> = MutableLiveData(emptyList())
 
 
+    init {
+        loadHistory()
+    }
+
+
+
     fun insertHistory(historyItem:CalcEntity)=viewModelScope.launch {
         repository.insertCalculation(historyItem)
     }
 
+    fun deleteExpression(historyItem:CalcEntity)=viewModelScope.launch {
+        repository.deleteExpression(historyItem)
+        loadHistory()
+    }
+
     fun loadHistory() {
-        historyList.value=repository.getAllHistories()
+        historyList.value= repository.getAllHistories()
     }
 
     fun clearHistory() {
