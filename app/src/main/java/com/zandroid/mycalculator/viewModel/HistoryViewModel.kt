@@ -1,7 +1,10 @@
 package com.zandroid.mycalculator.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.zandroid.mycalculator.repository.HistoryRepository
 import com.zandroid.mycalculator.room.CalcEntity
@@ -12,32 +15,18 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryViewModel @Inject constructor(private val repository: HistoryRepository):ViewModel() {
 
-    val historyList=MutableLiveData<List<CalcEntity>>()
-    val emptyList:MutableLiveData<List<CalcEntity>> = MutableLiveData(emptyList())
-
-
-    init {
-        loadHistory()
-    }
-
-
-
     fun insertHistory(historyItem:CalcEntity)=viewModelScope.launch {
         repository.insertCalculation(historyItem)
     }
 
     fun deleteExpression(historyItem:CalcEntity)=viewModelScope.launch {
         repository.deleteExpression(historyItem)
-        loadHistory()
     }
 
-    fun loadHistory() {
-        historyList.value= repository.getAllHistories()
-    }
+    val loadHistories=repository.getAllHistories().asLiveData()
 
     fun clearHistory() {
         repository.clearHistory()
-        historyList.value= emptyList()
     }
 
 

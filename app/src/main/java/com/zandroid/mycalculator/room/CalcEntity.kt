@@ -8,7 +8,7 @@ import com.zandroid.mycalculator.utils.TABLE_HISTORY
 @Entity(tableName = TABLE_HISTORY)
 data class CalcEntity(
     @PrimaryKey(autoGenerate = true)
-    val id:Int=0,
-    val expression:String="",
-    val result: String="",
+    var id:Int=0,
+    var expression:String="",
+    var result: String="",
 )

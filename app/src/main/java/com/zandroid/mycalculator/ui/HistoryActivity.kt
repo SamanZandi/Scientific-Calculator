@@ -1,28 +1,14 @@
 package com.zandroid.mycalculator.ui
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.coroutineScope
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.zandroid.mycalculator.databinding.ActivityHistoryBinding
-import com.zandroid.mycalculator.databinding.ActivitySplashScreenBinding
-import com.zandroid.mycalculator.repository.HistoryRepository
-import com.zandroid.mycalculator.room.CalcDao
 import com.zandroid.mycalculator.room.CalcEntity
 import com.zandroid.mycalculator.viewModel.HistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.time.Duration
 
 @AndroidEntryPoint
 class HistoryActivity : AppCompatActivity() {
@@ -34,7 +20,10 @@ class HistoryActivity : AppCompatActivity() {
     private val viewModel:HistoryViewModel by viewModels()
 
     @Inject
-    lateinit var historyAdapter: HistoryAdapter2
+    lateinit var historyAdapter: HistoryAdapter
+
+    @Inject
+    lateinit var entity: CalcEntity
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,35 +35,33 @@ class HistoryActivity : AppCompatActivity() {
         binding.apply {
 
             //get data
-
-            viewModel.historyList.observe(this@HistoryActivity){
-                historyAdapter.setData(it)
-
+            viewModel.loadHistories.observe(this@HistoryActivity){
+                it?.let {list->
+                    historyAdapter.setData(list)
+                }
                 recyclerHistory.apply {
                     layoutManager=LinearLayoutManager(this@HistoryActivity)
                     adapter=historyAdapter
                 }
-
             }
 
             //delete item
             historyAdapter.setOnItemClickListener {
-                viewModel.deleteExpression(it)
+                entity.id=it.id
+                entity.expression=it.expression
+                entity.result=it.result
+                viewModel.deleteExpression(entity)
             }
 
 
             //clear All
-            btnClear.setOnClickListener {
-          viewModel.clearHistory()
-                    viewModel.emptyList.observe(this@HistoryActivity) {
-                        historyAdapter.setData(it)
-                        Log.e( "emptylist ", it.toString())
-                    }
-            }
+            btnClear.setOnClickListener { viewModel.clearHistory() }
         }
 
 
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()

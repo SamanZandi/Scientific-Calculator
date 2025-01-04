@@ -11,16 +11,20 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.zandroid.mycalculator.R
 import com.zandroid.mycalculator.databinding.ActivityCalculatorBinding
 import com.zandroid.mycalculator.room.CalcEntity
 import com.zandroid.mycalculator.viewModel.HistoryViewModel
 import com.zandroid.mycalculator.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import net.objecthunter.exp4j.ExpressionBuilder
 import net.objecthunter.exp4j.function.Function
 import net.objecthunter.exp4j.operator.Operator
 import org.mariuszgromada.math.mxparser.Expression
+import org.mariuszgromada.math.mxparser.mathcollection.MathFunctions.mod
 import javax.inject.Inject
 import kotlin.math.acos
 import kotlin.math.acosh
@@ -49,6 +53,7 @@ class CalculatorActivity : AppCompatActivity() {
     lateinit var entity: CalcEntity
 
     private var isLandScape=false
+    private var percentageCount = 0
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -102,17 +107,25 @@ class CalculatorActivity : AppCompatActivity() {
             }
 
             //Percent
-            if (txtExpression.contains("%")) {
-                if(txtExpression.contains("+") || txtExpression.contains("-") || txtExpression.contains("*") || txtExpression.contains("/")){
+            if(txtExpression.contains("%")) {
+                if(txtExpression.contains("+") || txtExpression.contains("-") || txtExpression.contains("*")
+                    || txtExpression.contains("/") ){
                     val preprocessedExpression = preprocessPercentageExpression(txtExpression)
                     val expression = Expression(preprocessedExpression)
                     val result = expression.calculate()
                     txtExpression = result.toString()
-                }else if (txtExpression.endsWith("%")){
-                    txtExpression = txtExpression.replace("%", "/100")
-                }
+                }else {
+                    percentageCount=txtExpression.count { it=='%' }
+                    if (percentageCount==1 && txtExpression.endsWith('%')){
+                        txtExpression=txtExpression.replace("%","/100")
+                    }else if (percentageCount>=1){
+                            txtExpression=txtExpression.replace("%","/100*")
+                        if (txtExpression.endsWith("*")) {
+                            txtExpression = txtExpression.dropLast(1) // حذف آخرین * در انتهای رشته
+                        }
+                        }
+                    }
             }
-
 
             val expressionBuilder = ExpressionBuilder(txtExpression)
 
@@ -375,12 +388,20 @@ class CalculatorActivity : AppCompatActivity() {
 
             btnPlus.setOnClickListener { appendCharWithCondition("0+","+") }
 
+            //Equal
             btnEqual.setOnClickListener {
                 calculateResult()
                 val expression = txtCalculation.text.toString()
                 val result = txtResult.text.toString()
                 entity = CalcEntity(entity.id, expression, result)
-                historyViewModel.insertHistory(entity)
+              lifecycleScope.launch{
+                  historyViewModel.insertHistory(entity)
+                  btnEqual.isEnabled=false
+                  delay(3000)
+                  btnEqual.isEnabled=true
+              }
+
+
             }
 
             //dot click
@@ -600,7 +621,6 @@ class CalculatorActivity : AppCompatActivity() {
                                 "/" -> if (percentage != 0.0) (num1 / (percentage / 100)).toString() else "NaN"
                                 else -> matchResult.value
                             }
-
                 } else {
                     matchResult.value
                 })
@@ -609,7 +629,6 @@ class CalculatorActivity : AppCompatActivity() {
 
         return updatedExpression
     }
-
 
 
     override fun onDestroy() {

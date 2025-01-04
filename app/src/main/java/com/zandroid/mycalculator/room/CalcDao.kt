@@ -7,6 +7,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.zandroid.mycalculator.utils.TABLE_HISTORY
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -18,9 +20,10 @@ interface CalcDao {
     @Delete
     suspend fun deleteExpression(calcEntity: CalcEntity)
 
-    @Query("DELETE FROM table_history")
+    @Query("DELETE FROM $TABLE_HISTORY")
     fun clearHistory()
 
-    @Query("SELECT * FROM table_history ORDER BY id DESC")
-    fun getAllHistory():List<CalcEntity>
+    @Query("SELECT * FROM $TABLE_HISTORY ORDER BY id DESC")
+   fun getAllHistory(): Flow<MutableList<CalcEntity>>
+
 }

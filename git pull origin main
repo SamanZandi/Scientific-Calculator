@@ -1,0 +1,45 @@
+[33mcommit df347d548ee438dde3a08d3ed2cd384309f7fbc4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Saman <saman_zandi91@yahoo.com>
+Date:   Sat Nov 30 13:31:39 2024 +0330
+
+    "Calculator commit" after edited calculation
+
+[33mcommit 3ae739e7546c4d5504c7b0b61e8ace09556d8e43[m
+Author: Saman <saman_zandi91@yahoo.com>
+Date:   Fri Nov 29 11:57:21 2024 +0330
+
+    3rd "Calculator commit"
+
+[33mcommit 4692fcb2b0981769214766d8e7f7a9503face525[m
+Author: Saman <saman_zandi91@yahoo.com>
+Date:   Fri Nov 29 11:30:00 2024 +0330
+
+    2nd "Calculator commit"
+
+[33mcommit 3dc98b54cd94b79d9997bb89007b41ff458b3781[m
+Author: Saman <113166024+SamanZandi@users.noreply.github.com>
+Date:   Thu Nov 28 19:06:14 2024 +0330
+
+    Delete app/build/generated/source directory
+
+[33mcommit 9b97f8246382768c0d362aeb5ed4347293f132eb[m
+Author: Saman <saman_zandi91@yahoo.com>
+Date:   Thu Nov 28 18:50:02 2024 +0330
+
+    Reapply "initial "Calculator commit""
+    
+    This reverts commit b7dc795d04e7e6872ad0463463f1959f681562c2.
+
+[33mcommit b7dc795d04e7e6872ad0463463f1959f681562c2[m
+Author: Saman <saman_zandi91@yahoo.com>
+Date:   Thu Nov 28 18:43:15 2024 +0330
+
+    Revert "initial "Calculator commit""
+    
+    This reverts commit 7c87754a4c886dfbc975264dd9523f878dfa20dc.
+
+[33mcommit 7c87754a4c886dfbc975264dd9523f878dfa20dc[m
+Author: Saman <saman_zandi91@yahoo.com>
+Date:   Thu Nov 28 18:36:25 2024 +0330
+
+    initial "Calculator commit"

@@ -10,7 +10,7 @@ import com.zandroid.mycalculator.databinding.ItemHistoryBinding
 import com.zandroid.mycalculator.room.CalcEntity
 import javax.inject.Inject
 
-class HistoryAdapter2 @Inject constructor() : RecyclerView.Adapter<HistoryAdapter2.ViewHolder>() {
+class HistoryAdapter @Inject constructor() : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
     private lateinit var binding: ItemHistoryBinding
     private var historyList = emptyList<CalcEntity>()
